@@ -27,30 +27,70 @@ public class MathExpressionParser implements Parser {
         eat(TokenType.NUM);
 
         Token op = currentToken;
-        eat(TokenType.PLUS);
+        if (op.getTokenType() == TokenType.PLUS) {
+            eat(TokenType.PLUS);
+        } else if (op.getTokenType() == TokenType.MINUS) {
+            eat(TokenType.MINUS);
+        } else if (op.getTokenType() == TokenType.MULTIPLY) {
+            eat(TokenType.MULTIPLY);
+        } else if (op.getTokenType() == TokenType.DIV) {
+            eat(TokenType.DIV);
+        }
 
         Token right = currentToken;
         eat(TokenType.NUM);
 
-        return left.getValue().add(right.getValue());
+        BigDecimal result;
+        if (op.getTokenType() == TokenType.PLUS) {
+            result = left.getValue().add(right.getValue());
+        } else if (op.getTokenType() == TokenType.MINUS) {
+            result = left.getValue().subtract(right.getValue());
+        } else if (op.getTokenType() == TokenType.MULTIPLY) {
+            result = left.getValue().multiply(right.getValue());
+        } else {//if (op.getTokenType() == TokenType.DIV) {
+            result = left.getValue().divide(right.getValue());
+        }
+
+        return result;
     }
 
     private Token next() throws InvalidTokenException {
-        ++currentPosition;
+        move();
         if (currentPosition >= expression.length()) {
             return new Token(TokenType.END, BigDecimal.ZERO);
         }
+
+        skipWhitespaces();
 
         char ch = expression.charAt(currentPosition);
         if (Character.isDigit(ch)) {
             return new Token(TokenType.NUM, new BigDecimal(getNumber()));
         }
 
-        if (ch == '+') {
-            return new Token(TokenType.PLUS, BigDecimal.ZERO);
+        switch (ch) {
+            case '+' :
+                return new Token(TokenType.PLUS, BigDecimal.ZERO);
+            case '-' :
+                return new Token(TokenType.MINUS, BigDecimal.ZERO);
+            case '*' :
+                return new Token(TokenType.MULTIPLY, BigDecimal.ZERO);
+            case '/' :
+                return new Token(TokenType.DIV, BigDecimal.ZERO);
         }
 
         throw new InvalidTokenException("Некорректный токен '" + ch + "'");
+    }
+
+    private void move() {
+        if (++currentPosition >= expression.length()) {
+            currentToken = new Token(TokenType.END, BigDecimal.ZERO);
+        }
+    }
+
+    private void skipWhitespaces() {
+        while (Character.isSpaceChar(expression.charAt(currentPosition))) {
+            move();
+        }
     }
 
     private String getNumber() {
@@ -58,7 +98,7 @@ public class MathExpressionParser implements Parser {
         while ((currentPosition < expression.length()) &&
                 (Character.isDigit(expression.charAt(currentPosition)) ||
                     expression.charAt(currentPosition) == '.')) {
-            ++currentPosition;
+            move();
         }
         return expression.substring(beginIndex, currentPosition--);
     }
