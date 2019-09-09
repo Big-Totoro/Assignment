@@ -27,9 +27,9 @@ public class MathExpressionParserTest {
 
     @Test
     public void subTest() throws ParsingException, InvalidTokenException {
-        BigDecimal expected = new BigDecimal("80.00");
+        BigDecimal expected = new BigDecimal("60.00");
         Parser parser = new MathExpressionParser();
-        BigDecimal result = parser.parse("100.50     -  20.50");
+        BigDecimal result = parser.parse("100.50     -  20.50   - 20");
         assertThat(
                 String.format("Ожидаемый результат: %s, фактический: %s", expected, result),
                 result,
@@ -39,9 +39,9 @@ public class MathExpressionParserTest {
 
     @Test
     public void addSubMixedTest() throws ParsingException, InvalidTokenException {
-        BigDecimal expected = new BigDecimal("41.00");
+        BigDecimal expected = new BigDecimal("57.00");
         Parser parser = new MathExpressionParser();
-        BigDecimal result = parser.parse("100.50     +  20.50 - 80.00");
+        BigDecimal result = parser.parse("100.50     +  20.50 - 80.00+16");
         assertThat(
                 String.format("Ожидаемый результат: %s, фактический: %s", expected, result),
                 result,
