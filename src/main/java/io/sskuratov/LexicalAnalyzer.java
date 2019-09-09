@@ -47,6 +47,16 @@ public class LexicalAnalyzer {
                 move();
                 return new Token(TokenType.DIV, BigDecimal.ZERO);
             }
+
+            if  (currentChar == '(') {
+                move();
+                return new Token(TokenType.LP, BigDecimal.ZERO);
+            }
+
+            if (currentChar == ')') {
+                move();
+                return new Token(TokenType.RP, BigDecimal.ZERO);
+            }
         }
 
         return new Token(TokenType.END, BigDecimal.ZERO);

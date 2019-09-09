@@ -72,4 +72,28 @@ public class MathExpressionParserTest {
                 equalTo(expected)
         );
     }
+
+    @Test
+    public void addSubMulDivMixedTest() throws ParsingException, InvalidTokenException {
+        BigDecimal expected = new BigDecimal("17");
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("14  +  2*    3  -6/   2");
+        assertThat(
+                String.format("Ожидаемый результат: %s, фактический: %s", expected, result),
+                result,
+                equalTo(expected)
+        );
+    }
+
+    @Test
+    public void parenthesesTest() throws ParsingException, InvalidTokenException {
+        BigDecimal expected = new BigDecimal("10");
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("7 + 3 * ( 10 / (12 / (3 + 1) - 1) ) / (2 + 3) - 5 - 3 + (8)");
+        assertThat(
+                String.format("Ожидаемый результат: %s, фактический: %s", expected, result),
+                result,
+                equalTo(expected)
+        );
+    }
 }

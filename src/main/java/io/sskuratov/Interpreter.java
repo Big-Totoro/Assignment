@@ -22,32 +22,54 @@ public class Interpreter {
         }
     }
 
+    private BigDecimal term() throws InvalidTokenException {
+        BigDecimal result = factor();
+
+        while ((currentToken.getTokenType() == TokenType.MULTIPLY) ||
+                (currentToken.getTokenType() == TokenType.DIV)) {
+            Token op = currentToken;
+            if (op.getTokenType() == TokenType.MULTIPLY) {
+                eat(TokenType.MULTIPLY);
+                result = result.multiply(factor());
+            } else if (op.getTokenType() == TokenType.DIV) {
+                eat(TokenType.DIV);
+                result = result.divide(factor());
+            }
+        }
+
+        return result;
+    }
+
     private BigDecimal factor() throws InvalidTokenException {
         Token token = currentToken;
-        eat(TokenType.NUM);
-        return token.getValue();
+        if (token.getTokenType() == TokenType.NUM) {
+            eat(TokenType.NUM);
+            return token.getValue();
+        }
+
+        BigDecimal result;
+        if (token.getTokenType() == TokenType.LP) {
+            eat(TokenType.LP);
+            result = expr();
+            eat(TokenType.RP);
+            return result;
+        }
+
+        throw new InvalidTokenException("Некорректный токен: " + token);
     }
 
     public BigDecimal expr() throws InvalidTokenException {
-        BigDecimal result = factor();
+        BigDecimal result = term();
 
         while ((currentToken.getTokenType() == TokenType.PLUS) ||
-                (currentToken.getTokenType() == TokenType.MINUS) ||
-                (currentToken.getTokenType() == TokenType.MULTIPLY) ||
-                (currentToken.getTokenType() == TokenType.DIV)) {
+                (currentToken.getTokenType() == TokenType.MINUS)) {
             Token op = currentToken;
             if (op.getTokenType() == TokenType.PLUS) {
                 eat(TokenType.PLUS);
-                result = result.add(factor());
+                result = result.add(term());
             } else if (op.getTokenType() == TokenType.MINUS) {
                 eat(TokenType.MINUS);
-                result = result.subtract(factor());
-            } else if (op.getTokenType() == TokenType.MULTIPLY) {
-                eat(TokenType.MULTIPLY);
-                result = result.multiply(factor());
-            } else {
-                eat(TokenType.DIV);
-                result = result.divide(factor());
+                result = result.subtract(term());
             }
         }
 
