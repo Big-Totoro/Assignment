@@ -38,6 +38,18 @@ public class MathExpressionParserTest {
     }
 
     @Test
+    public void addSubMixedTest() throws ParsingException, InvalidTokenException {
+        BigDecimal expected = new BigDecimal("41.00");
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("100.50     +  20.50 - 80.00");
+        assertThat(
+                String.format("Ожидаемый результат: %s, фактический: %s", expected, result),
+                result,
+                equalTo(expected)
+        );
+    }
+
+    @Test
     public void mulTest() throws ParsingException, InvalidTokenException {
         BigDecimal expected = new BigDecimal("2000");
         Parser parser = new MathExpressionParser();

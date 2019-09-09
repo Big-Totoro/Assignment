@@ -20,35 +20,32 @@ public class MathExpressionParser implements Parser {
         return result;
     }
 
+    private BigDecimal term() throws InvalidTokenException {
+        Token token = currentToken;
+        eat(TokenType.NUM);
+        return token.getValue();
+    }
+
     private BigDecimal expr() throws InvalidTokenException {
         currentToken = next();
 
-        Token left = currentToken;
-        eat(TokenType.NUM);
+        BigDecimal result = term();
 
         Token op = currentToken;
-        if (op.getTokenType() == TokenType.PLUS) {
-            eat(TokenType.PLUS);
-        } else if (op.getTokenType() == TokenType.MINUS) {
-            eat(TokenType.MINUS);
-        } else if (op.getTokenType() == TokenType.MULTIPLY) {
-            eat(TokenType.MULTIPLY);
-        } else if (op.getTokenType() == TokenType.DIV) {
-            eat(TokenType.DIV);
-        }
+        while ((op.getTokenType() == TokenType.PLUS) ||
+                (op.getTokenType() == TokenType.MINUS) ||
+                (op.getTokenType() == TokenType.MULTIPLY) ||
+                (op.getTokenType() == TokenType.DIV)) {
+            if (op.getTokenType() == TokenType.PLUS) {
+                eat(TokenType.PLUS);
+                result = result.add(term());
+            } else if (op.getTokenType() == TokenType.MINUS) {
+                eat(TokenType.MINUS);
+                result = result.subtract(term());
+            } else {
 
-        Token right = currentToken;
-        eat(TokenType.NUM);
-
-        BigDecimal result;
-        if (op.getTokenType() == TokenType.PLUS) {
-            result = left.getValue().add(right.getValue());
-        } else if (op.getTokenType() == TokenType.MINUS) {
-            result = left.getValue().subtract(right.getValue());
-        } else if (op.getTokenType() == TokenType.MULTIPLY) {
-            result = left.getValue().multiply(right.getValue());
-        } else {//if (op.getTokenType() == TokenType.DIV) {
-            result = left.getValue().divide(right.getValue());
+            }
+            op = currentToken;
         }
 
         return result;
