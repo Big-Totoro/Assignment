@@ -1,7 +1,5 @@
 package io.sskuratov;
 
-import io.sskuratov.exceptions.InvalidTokenException;
-
 import java.math.BigDecimal;
 
 public class LexicalAnalyzer {
@@ -17,7 +15,11 @@ public class LexicalAnalyzer {
         currentChar = expression.charAt(currentPosition);
     }
 
-    public Token next() throws InvalidTokenException {
+    /**
+     * Переходт к следующей лексеме и идентифицирует ее
+     * @return Токен, соответствующий лексеме или набору лексем
+     */
+    public Token next() {
         while (currentChar != END) {
             if (Character.isSpaceChar(currentChar)) {
                 skipWhitespaces();
@@ -25,7 +27,7 @@ public class LexicalAnalyzer {
             }
 
             if (Character.isDigit(currentChar)) {
-                return new Token(TokenType.NUM, getNumber());
+                return new Token(TokenType.NUM, parseNumber());
             }
 
             if (currentChar == '+') {
@@ -62,6 +64,9 @@ public class LexicalAnalyzer {
         return new Token(TokenType.END, BigDecimal.ZERO);
     }
 
+    /**
+     * Переходит к следующей лексеме
+     */
     private void move() {
         if (++currentPosition >= expression.length()) {
             currentChar = END;
@@ -70,13 +75,20 @@ public class LexicalAnalyzer {
         }
     }
 
+    /**
+     * Пропускает символы пробела
+     */
     private void skipWhitespaces() {
         while ((currentChar != END) && Character.isSpaceChar(expression.charAt(currentPosition))) {
             move();
         }
     }
 
-    private BigDecimal getNumber() {
+    /**
+     * Парсит лексемы как число
+     * @return число
+     */
+    private BigDecimal parseNumber() {
         int beginIndex = currentPosition;
         while ((currentChar != END) && (Character.isDigit(expression.charAt(currentPosition)) ||
                 expression.charAt(currentPosition) == '.')) {

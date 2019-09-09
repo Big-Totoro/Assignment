@@ -14,6 +14,11 @@ public class Interpreter {
         this.currentToken = lexicalAnalyzer.next();
     }
 
+    /**
+     * Проверяет что текущий токен соответствует ожидаемому, согласно грамматике и переходит к следующему
+     * @param type ожидаемый токен
+     * @throws InvalidTokenException
+     */
     private void eat(TokenType type) throws InvalidTokenException {
         if (currentToken.getTokenType() == type) {
             currentToken = lexicalAnalyzer.next();
@@ -22,6 +27,11 @@ public class Interpreter {
         }
     }
 
+    /**
+     * Метод, соответствующий нетерминальному символу term грамматики
+     * @return результат вычислений
+     * @throws InvalidTokenException
+     */
     private BigDecimal term() throws InvalidTokenException {
         BigDecimal result = factor();
 
@@ -40,6 +50,11 @@ public class Interpreter {
         return result;
     }
 
+    /**
+     * Нетерминальный символ factor, соответствующий грамматике
+     * @return результат вычислений
+     * @throws InvalidTokenException
+     */
     private BigDecimal factor() throws InvalidTokenException {
         Token token = currentToken;
         if (token.getTokenType() == TokenType.NUM) {
@@ -58,6 +73,11 @@ public class Interpreter {
         throw new InvalidTokenException("Некорректный токен: " + token);
     }
 
+    /**
+     * Нетерминальный символ expr, соответствующий грамматике
+     * @return результат вычислений
+     * @throws InvalidTokenException
+     */
     public BigDecimal expr() throws InvalidTokenException {
         BigDecimal result = term();
 
