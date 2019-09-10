@@ -1,4 +1,4 @@
-package io.sskuratov;
+package io.sskuratov.parser;
 
 import java.math.BigDecimal;
 

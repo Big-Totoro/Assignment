@@ -1,4 +1,4 @@
-package io.sskuratov.exceptions;
+package io.sskuratov.parser.exceptions;
 
 public class ParsingException extends Exception {
     public ParsingException(String message) {

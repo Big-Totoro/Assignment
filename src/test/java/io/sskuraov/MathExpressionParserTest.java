@@ -1,9 +1,9 @@
 package io.sskuraov;
 
-import io.sskuratov.MathExpressionParser;
-import io.sskuratov.Parser;
-import io.sskuratov.exceptions.InvalidTokenException;
-import io.sskuratov.exceptions.ParsingException;
+import io.sskuratov.parser.MathExpressionParser;
+import io.sskuratov.parser.Parser;
+import io.sskuratov.parser.exceptions.InvalidTokenException;
+import io.sskuratov.parser.exceptions.ParsingException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

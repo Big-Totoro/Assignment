@@ -1,6 +1,6 @@
-package io.sskuratov;
+package io.sskuratov.parser;
 
-import io.sskuratov.exceptions.InvalidTokenException;
+import io.sskuratov.parser.exceptions.InvalidTokenException;
 
 import java.math.BigDecimal;
 
