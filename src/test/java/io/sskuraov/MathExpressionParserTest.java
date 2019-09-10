@@ -4,7 +4,9 @@ import io.sskuratov.MathExpressionParser;
 import io.sskuratov.Parser;
 import io.sskuratov.exceptions.InvalidTokenException;
 import io.sskuratov.exceptions.ParsingException;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 
@@ -12,6 +14,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MathExpressionParserTest {
+
+    @Rule
+    public ExpectedException exceptionGrabber = ExpectedException.none();
 
     @Test
     public void addTest() throws ParsingException, InvalidTokenException {
@@ -121,4 +126,43 @@ public class MathExpressionParserTest {
         );
     }
 
+    @Test
+    public void powPowExprTest() throws ParsingException, InvalidTokenException {
+        BigDecimal expected = new BigDecimal("60");
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("7 + 3 * 2 ^ (2 ^ (1+1)) + 5");
+        assertThat(
+                String.format("Ожидаемый результат: %s, фактический: %s", expected, result),
+                result,
+                equalTo(expected)
+        );
+    }
+
+    @Test
+    public void negAddMulTest() throws ParsingException, InvalidTokenException {
+        exceptionGrabber.expect(InvalidTokenException.class);
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("7+*3");
+    }
+
+    @Test
+    public void negNotClosedBracketTest() throws ParsingException, InvalidTokenException {
+        exceptionGrabber.expect(ParsingException.class);
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("(7+3 * 5");
+    }
+
+    @Test
+    public void negNotOpenedBracketTest() throws ParsingException, InvalidTokenException {
+        exceptionGrabber.expect(ParsingException.class);
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("7+3) * 5");
+    }
+
+    @Test
+    public void negEmptyExpressionTest() throws ParsingException, InvalidTokenException {
+        exceptionGrabber.expect(ParsingException.class);
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("   ");
+    }
 }
