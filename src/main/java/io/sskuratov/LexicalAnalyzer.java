@@ -59,6 +59,11 @@ public class LexicalAnalyzer {
                 move();
                 return new Token(TokenType.RP, BigDecimal.ZERO);
             }
+
+            if (currentChar == '^') {
+                move();
+                return new Token(TokenType.POW, BigDecimal.ZERO);
+            }
         }
 
         return new Token(TokenType.END, BigDecimal.ZERO);

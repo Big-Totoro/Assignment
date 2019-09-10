@@ -56,6 +56,23 @@ public class Interpreter {
      * @throws InvalidTokenException
      */
     private BigDecimal factor() throws InvalidTokenException {
+        BigDecimal result = exp();
+
+        if (currentToken.getTokenType() == TokenType.NUM) {
+            eat(TokenType.NUM);
+            return currentToken.getValue();
+        }
+
+        if (currentToken.getTokenType() == TokenType.POW) {
+            eat(TokenType.POW);
+            result = result.pow(exp().intValue());
+            return result;
+        }
+
+        return result;
+    }
+
+    private BigDecimal exp() throws InvalidTokenException {
         Token token = currentToken;
         if (token.getTokenType() == TokenType.NUM) {
             eat(TokenType.NUM);

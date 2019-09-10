@@ -96,4 +96,29 @@ public class MathExpressionParserTest {
                 equalTo(expected)
         );
     }
+
+    @Test
+    public void powTest() throws ParsingException, InvalidTokenException {
+        BigDecimal expected = new BigDecimal("12");
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("3*2^2");
+        assertThat(
+                String.format("Ожидаемый результат: %s, фактический: %s", expected, result),
+                result,
+                equalTo(expected)
+        );
+    }
+
+    @Test
+    public void powExprTest() throws ParsingException, InvalidTokenException {
+        BigDecimal expected = new BigDecimal("10");
+        Parser parser = new MathExpressionParser();
+        BigDecimal result = parser.parse("7 + 3 * ( 10 / (12 / (3 + 1) - 1) ) / (2 + 3) - 5 - 3 + (8)");
+        assertThat(
+                String.format("Ожидаемый результат: %s, фактический: %s", expected, result),
+                result,
+                equalTo(expected)
+        );
+    }
+
 }
