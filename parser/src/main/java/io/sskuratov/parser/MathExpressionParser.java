@@ -5,7 +5,7 @@ import io.sskuratov.parser.exceptions.ParsingException;
 
 import java.math.BigDecimal;
 
-public class MathExpressionParser implements Parser {
+public class MathExpressionParser implements Parser{
 
     @Override
     public BigDecimal parse(String expression) throws InvalidTokenException, ParsingException {
