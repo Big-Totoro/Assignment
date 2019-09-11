@@ -6,7 +6,11 @@
 
     <groupId>io.sskuratov</groupId>
     <artifactId>Assignment</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>parser</module>
+    </modules>
 
     <name>Assignment</name>
     <url>https://github.com/Big-Totoro/Assignment</url>
@@ -18,17 +22,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>java-hamcrest</artifactId>
-            <version>2.0.0.0</version>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
