@@ -16,11 +16,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(JUnitParamsRunner.class)
 public class MathExpressionParserTest {
 
+    private final String logMessageTemplate = "-> Проверяем строку '%s', ожидаемый результат '%s'";
+
     @Test
     @Parameters(source = TestDataProvider.class, method = "providePositiveData")
     public void positiveTest(String expression, BigDecimal expectedResult) throws ParsingException, InvalidTokenException {
-        Logger.getGlobal().info(String.format("-> Проверяем строку '%s', ожидаемый результат '%s'",
-                expression, expectedResult));
+        Logger.getGlobal().info(String.format(logMessageTemplate, expression, expectedResult));
         Parser parser = new MathExpressionParser();
         BigDecimal actualResult = parser.parse(expression);
         assertThat(
@@ -33,8 +34,7 @@ public class MathExpressionParserTest {
     @Test(expected = InvalidTokenException.class)
     @Parameters(source = TestDataProvider.class, method = "provideInvalidTokenData")
     public void invalidTokenTest(String expression) throws ParsingException, InvalidTokenException {
-        Logger.getGlobal().info(String.format("-> Проверяем строку '%s', ожидаемый результат '%s'",
-                expression, InvalidTokenException.class));
+        Logger.getGlobal().info(String.format(logMessageTemplate, expression, InvalidTokenException.class));
         Parser parser = new MathExpressionParser();
         parser.parse(expression);
     }
@@ -42,8 +42,7 @@ public class MathExpressionParserTest {
     @Test(expected = ParsingException.class)
     @Parameters(source = TestDataProvider.class, method = "provideParsingErrorData")
     public void parsingErrorTest(String expression) throws ParsingException, InvalidTokenException {
-        Logger.getGlobal().info(String.format("-> Проверяем строку '%s', ожидаемый результат '%s'",
-                expression, ParsingException.class));
+        Logger.getGlobal().info(String.format(logMessageTemplate, expression, ParsingException.class));
         Parser parser = new MathExpressionParser();
         parser.parse(expression);
     }
