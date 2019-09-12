@@ -15,8 +15,9 @@ public class Interpreter {
     }
 
     /**
-     * Проверяет, что текущий токен соответствует ожидаемому согласно грамматике и переходит к следующему
-     * @param type ожидаемый токен
+     * Verifies the current token corresponds to the expected token that corresponds to the grammar rule and
+     * gets the next token
+     * @param type the expected token
      * @throws InvalidTokenException
      */
     private void eat(TokenType type) throws InvalidTokenException {
@@ -28,8 +29,8 @@ public class Interpreter {
     }
 
     /**
-     * Метод, соответствующий нетерминальному символу term грамматики
-     * @return результат вычислений
+     * Method corresponds to the non-terminal grammar symbol term
+     * @return the term calculation result
      * @throws InvalidTokenException
      */
     private BigDecimal term() throws InvalidTokenException {
@@ -51,8 +52,8 @@ public class Interpreter {
     }
 
     /**
-     * Нетерминальный символ factor, соответствующий грамматике
-     * @return результат вычислений
+     * Method corresponds to the non-terminal grammar symbol factor
+     * @return the factor calculation result
      * @throws InvalidTokenException
      */
     private BigDecimal factor() throws InvalidTokenException {
@@ -72,6 +73,11 @@ public class Interpreter {
         return result;
     }
 
+    /**
+     * Method corresponds to the non-terminal grammar symbol exp
+     * @return the exp calculation result
+     * @throws InvalidTokenException
+     */
     private BigDecimal exp() throws InvalidTokenException {
         Token token = currentToken;
         if (token.getTokenType() == TokenType.NUM) {
@@ -91,8 +97,8 @@ public class Interpreter {
     }
 
     /**
-     * Нетерминальный символ expr, соответствующий грамматике
-     * @return результат вычислений
+     * Method corresponds to the non-terminal grammar symbol expr
+     * @return the expr calculation result
      * @throws InvalidTokenException
      */
     public BigDecimal expr() throws InvalidTokenException {

@@ -16,8 +16,8 @@ public class LexicalAnalyzer {
     }
 
     /**
-     * Переходит к следующей лексеме и идентифицирует ее
-     * @return Токен, соответствующий лексеме или набору лексем
+     * Step to the next lexeme and parse it
+     * @return Token corresponds to the lexeme or lexemes
      */
     public Token next() {
         while (currentChar != END) {
@@ -70,7 +70,7 @@ public class LexicalAnalyzer {
     }
 
     /**
-     * Переходит к следующей лексеме
+     * Get the next lookahead lexeme
      */
     private void move() {
         if (++currentPosition >= expression.length()) {
@@ -81,7 +81,7 @@ public class LexicalAnalyzer {
     }
 
     /**
-     * Пропускает символы пробела
+     * Skip whitespaces
      */
     private void skipWhitespaces() {
         while ((currentChar != END) && Character.isSpaceChar(expression.charAt(currentPosition))) {
@@ -90,8 +90,8 @@ public class LexicalAnalyzer {
     }
 
     /**
-     * Парсит лексемы как число
-     * @return число
+     * Parse the lexemes as a number
+     * @return a number
      */
     private BigDecimal parseNumber() {
         int beginIndex = currentPosition;
