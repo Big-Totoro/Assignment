@@ -23,6 +23,8 @@ public class TestDataProvider {
     public static Object[] provideInvalidTokenData() {
         return new Object[] {
                 new Object[] {"7+*3"},
+                new Object[] {"7k*3"},
+                new Object[] {"7*3-"},
         };
     }
 

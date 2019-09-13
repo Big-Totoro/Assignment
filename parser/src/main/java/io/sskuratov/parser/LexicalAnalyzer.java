@@ -1,5 +1,7 @@
 package io.sskuratov.parser;
 
+import io.sskuratov.parser.exceptions.InvalidTokenException;
+
 import java.math.BigDecimal;
 
 public class LexicalAnalyzer {
@@ -19,7 +21,7 @@ public class LexicalAnalyzer {
      * Step to the next lexeme and parse it
      * @return Token corresponds to the lexeme or lexemes
      */
-    public Token next() {
+    public Token next() throws InvalidTokenException {
         while (currentChar != END) {
             if (Character.isSpaceChar(currentChar)) {
                 skipWhitespaces();
@@ -63,6 +65,10 @@ public class LexicalAnalyzer {
             if (currentChar == '^') {
                 move();
                 return new Token(TokenType.POW, BigDecimal.ZERO);
+            }
+
+            if (currentPosition < expression.length()) {
+                throw new InvalidTokenException(String.format("Incorrect symbol: '%s'", currentChar));
             }
         }
 
