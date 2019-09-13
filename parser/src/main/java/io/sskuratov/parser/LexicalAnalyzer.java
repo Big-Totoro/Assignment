@@ -10,7 +10,7 @@ public class LexicalAnalyzer {
     private char currentChar;
 
     public LexicalAnalyzer(String expression) {
-        this.expression = expression;
+        this.expression = expression.replaceAll("\\(-", "(0-");
         currentPosition = 0;
         currentChar = expression.charAt(currentPosition);
     }

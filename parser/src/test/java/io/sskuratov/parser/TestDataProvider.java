@@ -14,7 +14,9 @@ public class TestDataProvider {
                 new Object[] {"14  +  2*    3  -6/   2", BigDecimal.valueOf(17.0)},
                 new Object[] {"7 + 3 * ( 10 / (12 / (3 + 1) - 1) ) / (2 + 3) - 5 - 3 + (8)", BigDecimal.valueOf(10.0)},
                 new Object[] {"3*2^2", BigDecimal.valueOf(12.0)},
-                new Object[] {"7 + 3 * 2 ^ (2 ^ (1+1)) + 5", BigDecimal.valueOf(60.0)}
+                new Object[] {"7 + 3 * 2 ^ (2 ^ (1+1)) + 5", BigDecimal.valueOf(60.0)},
+                new Object[] {"(-7*8+9-(9/4.5))^2", BigDecimal.valueOf(2401)},
+                new Object[] {"9*1+4.5", BigDecimal.valueOf(13.5)}
         };
     }
 
