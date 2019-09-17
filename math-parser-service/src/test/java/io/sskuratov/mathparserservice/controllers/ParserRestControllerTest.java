@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -26,11 +27,15 @@ public class ParserRestControllerTest {
 
     @Test
     public void parserTest() throws UnsupportedEncodingException {
-        String params = URLEncoder.encode("1.0+2", StandardCharsets.UTF_8.toString());
-        ResponseEntity<ParseResult> entity = template.getForEntity(String.format("/parser/v1/parse?expression=%s",
-                params), ParseResult.class);
-        assertThat("", entity.getStatusCode(), equalTo(HttpStatus.OK));
-        assertThat("", entity.getHeaders().getContentType(), equalTo(MediaType.APPLICATION_JSON_UTF8));
-        ParseResult result = entity.getBody();
+        String params = URLEncoder.encode("1+2", StandardCharsets.UTF_8.toString());
+        ResponseEntity<BigDecimal> entity = template.getForEntity(String.format("/parser/v1/parse?expression=%s",
+                params), BigDecimal.class);
+        assertThat(String.format("Ожидаемый статус код: %s, получен: %s",
+                HttpStatus.OK, entity.getStatusCode()), entity.getStatusCode(), equalTo(HttpStatus.OK));
+        assertThat(String.format("Ожидаемый заголовок: %s, получен: %s",
+                entity.getHeaders().getContentType(), MediaType.APPLICATION_JSON_UTF8),
+                entity.getHeaders().getContentType(), equalTo(MediaType.APPLICATION_JSON_UTF8));
+        BigDecimal result = entity.getBody();
+        System.out.println(result);
     }
 }

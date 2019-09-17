@@ -20,14 +20,21 @@ public class MathExpressionParserTest {
 
     @Test
     @Parameters(source = TestDataProvider.class, method = "providePositiveData")
-    public void positiveTest(String expression, BigDecimal expectedResult) throws ParsingException, InvalidTokenException {
+    public void positiveTest(String expression, BigDecimal expectedResult, int tokensAmount) throws ParsingException, InvalidTokenException {
         Logger.getGlobal().info(String.format(logMessageTemplate, expression, expectedResult));
         Parser parser = new MathExpressionParser();
-        BigDecimal actualResult = parser.parse(expression);
+        EvaluationResult actualResult = parser.parse(expression);
         assertThat(
                 String.format("Ожидаемый результат: %s, фактический: %s", expectedResult, actualResult),
-                actualResult.compareTo(expectedResult),
+                actualResult.getResult().compareTo(expectedResult),
                 equalTo(0)
+        );
+        assertThat(
+                String.format("Ожидаемое количество операций: %s, фактически: %s",
+                        tokensAmount,
+                        actualResult.getTokens().size()),
+                actualResult.getTokens().size(),
+                equalTo(tokensAmount)
         );
     }
 

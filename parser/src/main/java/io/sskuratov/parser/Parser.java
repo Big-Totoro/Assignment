@@ -3,8 +3,6 @@ package io.sskuratov.parser;
 import io.sskuratov.parser.exceptions.InvalidTokenException;
 import io.sskuratov.parser.exceptions.ParsingException;
 
-import java.math.BigDecimal;
-
 public interface Parser {
 
     /**
@@ -13,5 +11,5 @@ public interface Parser {
      * @return the calculation result
      * @throws ParsingException signals that an error has been reached unexpectedly while parsing
      */
-    BigDecimal parse(String expression) throws ParsingException, InvalidTokenException;
+    EvaluationResult parse(String expression) throws ParsingException, InvalidTokenException;
 }

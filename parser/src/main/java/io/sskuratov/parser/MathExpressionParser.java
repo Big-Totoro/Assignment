@@ -4,11 +4,12 @@ import io.sskuratov.parser.exceptions.InvalidTokenException;
 import io.sskuratov.parser.exceptions.ParsingException;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 public class MathExpressionParser implements Parser {
 
     @Override
-    public BigDecimal parse(String expression) throws InvalidTokenException, ParsingException {
+    public EvaluationResult parse(String expression) throws InvalidTokenException, ParsingException {
         if (expression == null || expression.trim().length() == 0) {
             throw new ParsingException("Строка должна содержать арифметическое выражение.");
         }
@@ -18,8 +19,9 @@ public class MathExpressionParser implements Parser {
 
         LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(expression);
         Interpreter interpreter = new Interpreter(lexicalAnalyzer);
-        BigDecimal result = interpreter.expr();
+        BigDecimal result = interpreter.evaluate();
+        Collection<Token> tokens = interpreter.getTokens();
 
-        return result;
+        return new MathResult(result, tokens);
     }
 }

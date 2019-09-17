@@ -3,11 +3,18 @@ package io.sskuratov.parser;
 import io.sskuratov.parser.exceptions.InvalidTokenException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class Interpreter {
 
     private LexicalAnalyzer lexicalAnalyzer;
     private Token currentToken;
+
+    /**
+     * A list of tokens corresponding to the input expression string
+     */
+    private Collection<Token> tokens;
 
     public Interpreter(LexicalAnalyzer lexicalAnalyzer) throws InvalidTokenException {
         this.lexicalAnalyzer = lexicalAnalyzer;
@@ -22,6 +29,7 @@ public class Interpreter {
      */
     private void eat(TokenType type) throws InvalidTokenException {
         if (currentToken.getTokenType() == type) {
+            addToken(currentToken);
             currentToken = lexicalAnalyzer.next();
         } else {
             throw new InvalidTokenException("Токен '" + type + "' не найден");
@@ -88,7 +96,9 @@ public class Interpreter {
         BigDecimal result;
         if (token.getTokenType() == TokenType.LP) {
             eat(TokenType.LP);
-            result = expr();
+            // Here we pass shouldCreateNewTokenList as false to indicate that we should not create new list of tokens
+            // but continue to add the tokens to the existing one
+            result = expr(false);
             eat(TokenType.RP);
             return result;
         }
@@ -97,11 +107,31 @@ public class Interpreter {
     }
 
     /**
+     * Perform parsing and evaluating the math expression
+     * @return the result of math expression evaluation
+     * @throws InvalidTokenException
+     */
+    public BigDecimal evaluate() throws InvalidTokenException {
+        return expr(true);
+    }
+
+    /**
      * Method corresponds to the non-terminal grammar symbol expr
+     * @param shouldCreateNewTokenList indicates we should create new list of the tokens
      * @return the expr calculation result
      * @throws InvalidTokenException
      */
-    public BigDecimal expr() throws InvalidTokenException {
+    private BigDecimal expr(boolean shouldCreateNewTokenList) throws InvalidTokenException {
+        /**
+         * Initialize a list of tokens
+         */
+        if (shouldCreateNewTokenList) {
+            initTokensList();
+        }
+
+        /**
+         * Start the expression parsing
+         */
         BigDecimal result = term();
 
         while ((currentToken.getTokenType() == TokenType.PLUS) ||
@@ -117,5 +147,28 @@ public class Interpreter {
         }
 
         return result;
+    }
+
+    /**
+     * Initialize the list of tokens
+     */
+    private void initTokensList() {
+        tokens = new ArrayList<>();
+    }
+
+    /**
+     * Put the token to the list of tokens
+     * @param token
+     */
+    private void addToken(Token token) {
+        tokens.add(token);
+    }
+
+    /**
+     * Returns the last calculated expression as a list of tokens
+     * @return
+     */
+    public Collection<Token> getTokens() {
+        return tokens;
     }
 }
