@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -22,8 +23,13 @@ public class Expressions {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     private LocalDateTime created_on;
+
+    @NotNull
     private String expression;
+
+    @NotNull
     private BigDecimal result;
 
     @OneToMany(cascade = ALL, fetch = FetchType.EAGER)
