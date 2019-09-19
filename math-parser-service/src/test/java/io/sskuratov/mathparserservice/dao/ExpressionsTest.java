@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -46,7 +46,7 @@ public class ExpressionsTest {
         numbers.add(new Numbers(BigDecimal.valueOf(2.0)));
         numbers.add(new Numbers(BigDecimal.valueOf(60)));
         Expressions saved = expressionsRepository.save(new Expressions(
-                LocalDateTime.now(),
+                LocalDate.now(),
                 expression,
                 expectedResult,
                 operations,

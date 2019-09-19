@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
@@ -18,11 +17,9 @@ public class Numbers {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Expressions expression;
 
-    @NotNull
     private BigDecimal number;
 
     public Numbers(BigDecimal number) {

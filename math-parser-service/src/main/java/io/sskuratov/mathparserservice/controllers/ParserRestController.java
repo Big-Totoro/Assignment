@@ -6,6 +6,7 @@ import io.sskuratov.parser.exceptions.InvalidTokenException;
 import io.sskuratov.parser.exceptions.ParsingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,10 +25,11 @@ public class ParserRestController {
 
     @GetMapping("/parser/v1/parse")
     @ResponseBody
-    public EvaluationResult parse(@RequestParam String expression) throws UnsupportedEncodingException {
+    public ResponseEntity<EvaluationResult> parse(@RequestParam String expression) throws UnsupportedEncodingException {
         try {
             expression = URLDecoder.decode(expression, StandardCharsets.UTF_8.toString());
-            return mathParserService.parse(expression);
+            return new ResponseEntity<>(
+            mathParserService.parse(expression), HttpStatus.OK);
         } catch (InvalidTokenException | ParsingException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

@@ -20,7 +20,7 @@ public class ExpressionsService {
         return null;
     }
 
-    public Long amountByOperation(TokenType operationId) {
+    public Long amountByOperation(TokenType type) {
         return null;
     }
 
@@ -28,7 +28,7 @@ public class ExpressionsService {
         return null;
     }
 
-    public List<Expressions> listOfExpressionsByOperation(TokenType operationId) {
+    public List<Expressions> listOfExpressionsByOperation(TokenType type) {
         return null;
     }
 

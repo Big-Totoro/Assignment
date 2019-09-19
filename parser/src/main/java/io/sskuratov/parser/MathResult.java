@@ -1,11 +1,13 @@
 package io.sskuratov.parser;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 
 @AllArgsConstructor
+@NoArgsConstructor
 public class MathResult implements EvaluationResult {
 
     private BigDecimal result;

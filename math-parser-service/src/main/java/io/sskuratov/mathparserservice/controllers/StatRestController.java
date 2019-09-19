@@ -27,8 +27,8 @@ public class StatRestController {
 
     @GetMapping("/stats/v1/expressions/amount/operation/{operationId}")
     @ResponseBody
-    public Long amountByOperation(@PathVariable TokenType operationId) {
-        return expressionsService.amountByOperation(operationId);
+    public Long amountByOperation(@PathVariable TokenType type) {
+        return expressionsService.amountByOperation(type);
     }
 
     @GetMapping("/stats/v1/expressions/date/{date}")
@@ -37,10 +37,10 @@ public class StatRestController {
         return expressionsService.listOfExpressionsOnDate(date);
     }
 
-    @GetMapping("/stats/v1/expressions/operation/{operationId}")
+    @GetMapping("/stats/v1/expressions/operation/{type}")
     @ResponseBody
-    public List<Expressions> listOfExpressionsByOperation(@PathVariable TokenType operationId) {
-        return expressionsService.listOfExpressionsByOperation(operationId);
+    public List<Expressions> listOfExpressionsByOperation(@PathVariable TokenType type) {
+        return expressionsService.listOfExpressionsByOperation(type);
     }
 
     @GetMapping("/stats/v1/number/popular")

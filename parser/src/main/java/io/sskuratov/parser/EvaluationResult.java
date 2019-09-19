@@ -1,8 +1,11 @@
 package io.sskuratov.parser;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.math.BigDecimal;
 import java.util.Collection;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "className")
 public interface EvaluationResult {
 
     /**

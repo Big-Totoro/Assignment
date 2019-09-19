@@ -2,11 +2,13 @@ package io.sskuratov.parser;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Token {
 
     TokenType tokenType;
