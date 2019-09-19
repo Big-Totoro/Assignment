@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,30 +22,30 @@ public class StatRestController {
     @GetMapping("/stats/v1/expressions/amount/date/{date}")
     @ResponseBody
     public Long amountOnDate(@PathVariable LocalDate date) {
-        return Long.valueOf(10);
+        return expressionsService.amountOnDate(date);
     }
 
     @GetMapping("/stats/v1/expressions/amount/operation/{operationId}")
     @ResponseBody
     public Long amountByOperation(@PathVariable TokenType operationId) {
-        return Long.valueOf(20);
+        return expressionsService.amountByOperation(operationId);
     }
 
     @GetMapping("/stats/v1/expressions/date/{date}")
     @ResponseBody
     public List<Expressions> listOfExpressionsOnDate(@PathVariable LocalDate date) {
-        return new ArrayList<>();
+        return expressionsService.listOfExpressionsOnDate(date);
     }
 
     @GetMapping("/stats/v1/expressions/operation/{operationId}")
     @ResponseBody
     public List<Expressions> listOfExpressionsByOperation(@PathVariable TokenType operationId) {
-        return new ArrayList<>();
+        return expressionsService.listOfExpressionsByOperation(operationId);
     }
 
     @GetMapping("/stats/v1/number/popular")
     @ResponseBody
     public BigDecimal popularNumber() {
-        return BigDecimal.valueOf(40.0);
+        return expressionsService.popularNumber();
     }
 }
