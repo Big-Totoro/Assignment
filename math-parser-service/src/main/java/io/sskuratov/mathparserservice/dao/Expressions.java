@@ -4,17 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
+import static javax.persistence.CascadeType.ALL;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Expressions {
 
     @Id
@@ -25,9 +26,18 @@ public class Expressions {
     private String expression;
     private BigDecimal result;
 
-    public Expressions(LocalDateTime created_on, String expression, BigDecimal result) {
+    @OneToMany(cascade = ALL, fetch = FetchType.EAGER)
+    private Set<Operations> operations = new HashSet<>();
+
+    @OneToMany(cascade = ALL, fetch = FetchType.EAGER)
+    private Set<Numbers> numbers = new HashSet<>();
+
+    public Expressions(LocalDateTime created_on, String expression, BigDecimal result,
+                       Set<Operations> operations, Set<Numbers> numbers) {
         this.created_on = created_on;
         this.expression = expression;
         this.result = result;
+        this.operations = operations;
+        this.numbers = numbers;
     }
 }

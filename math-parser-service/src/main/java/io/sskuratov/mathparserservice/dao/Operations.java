@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Operations {
 
     @Id
@@ -18,13 +18,12 @@ public class Operations {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Long expression_id;
+    private Expressions expression;
 
     @Enumerated(EnumType.ORDINAL)
     private TokenType name;
 
-    public Operations(Long expression_id, TokenType name) {
-        this.expression_id = expression_id;
+    public Operations(TokenType name) {
         this.name = name;
     }
 }

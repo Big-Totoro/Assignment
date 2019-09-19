@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Numbers {
 
     @Id
@@ -18,12 +18,11 @@ public class Numbers {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Long expression_id;
+    private Expressions expression;
 
     private BigDecimal number;
 
-    public Numbers(Long expression_id, BigDecimal number) {
-        this.expression_id = expression_id;
+    public Numbers(BigDecimal number) {
         this.number = number;
     }
 }

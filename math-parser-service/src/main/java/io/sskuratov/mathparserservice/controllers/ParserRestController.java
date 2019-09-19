@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 public class ParserRestController {
 
     @Autowired
-    MathParserService mathParserService;
+    private MathParserService mathParserService;
 
     @GetMapping("/parser/v1/parse")
     @ResponseBody
