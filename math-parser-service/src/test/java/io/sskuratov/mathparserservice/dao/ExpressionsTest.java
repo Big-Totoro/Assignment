@@ -31,8 +31,8 @@ public class ExpressionsTest {
 
     @Test
     public void expressionsTest() throws ParsingException, InvalidTokenException {
-        String expression = "(-7*8+9-(9/4.5))^2";
-        BigDecimal expectedResult = BigDecimal.valueOf(2401);
+        final String expression = "(-7*8+9-(9/4.5))^2";
+        final BigDecimal expectedResult = BigDecimal.valueOf(2401);
 
         Logger.getGlobal().info(String.format(logMessageTemplate, expression, expectedResult));
         Parser parser = new MathExpressionParser();

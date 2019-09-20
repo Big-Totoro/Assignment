@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -16,40 +15,42 @@ public interface ExpressionsRepository extends JpaRepository<Expressions, Long> 
 
     /**
      * Returns amount of calculated expressions on date
-     * @param createdOn
+     * @param beginDate
+     * @param endDate
      * @return
      */
-    @Query(value = "select count(*) from EXPRESSIONS where CREATED_ON BETWEEN ':createdOn 0:00:00' AND '2019-09-19 23:59:59'", nativeQuery = true)
-    Long amountOnDate(@Param("created_on") LocalDate createdOn);
+    @Query(value = "SELECT count(e.expression) FROM Expressions e WHERE e.createdDate BETWEEN :beginDate AND :endDate")
+    Long amountOnDate(@Param("beginDate") LocalDateTime beginDate, @Param("endDate") LocalDateTime endDate);
 
     /**
      * Returns amount of calculated expressions have the specific operation
      * @param operation operation token
      * @return
      */
-    @Query(value = "select count(*) from EXPRESSIONS where ID IN (select EXPRESSION_ID from OPERATIONS where TYPE=?1)", nativeQuery = true)
+    @Query(value = "SELECT COUNT(e.expression) FROM Expressions e INNER JOIN e.operations AS o WHERE o.type=:operation")
     Long amountByOperation(@Param("operation") TokenType operation);
 
     /**
      * Returns a list of calculated expressions on date
-     * @param createdOn
+     * @param beginDate
+     * @param endDate
      * @return
      */
-    @Query(value = "select * from EXPRESSIONS where CREATED_ON BETWEEN '2019-09-17 0:00:00' AND '2019-09-17 23:59:59'", nativeQuery = true)
-    List<Expressions> listOfExpressionsOnDate(@Param("created_on") LocalDate createdOn);
+    @Query(value = "SELECT e.expression FROM Expressions e WHERE e.createdDate BETWEEN :beginDate AND :endDate")
+    List<String> listOfExpressionsOnDate(@Param("beginDate") LocalDateTime beginDate, @Param("endDate") LocalDateTime endDate);
 
     /**
      * Returns a list of calculated expressions have the specific operation
      * @param operation operation token
      * @return
      */
-    @Query(value = "select id, created_on, expression, result from EXPRESSIONS where ID IN (select EXPRESSION_ID from OPERATIONS where TYPE=?1)", nativeQuery = true)
-    List<Expressions> listOfExpressionsByOperation(@Param("operation") TokenType operation);
+    @Query(value = "SELECT e.id, e.createdDate, e.expression, e.result FROM Expressions e INNER JOIN e.operations AS o WHERE o.type=:operation")
+    List<String> listOfExpressionsByOperation(@Param("operation") TokenType operation);
 
     /**
      * Returns the most popular number(s) used among the expressions
      * @return
      */
-    @Query(value = "select num.NUMBER from NUMBERS num group by num.NUMBER having count(num.NUMBER) = (select count(n.NUMBER) from NUMBERS n group by n.NUMBER order by count(n.NUMBER) desc limit 1)", nativeQuery = true)
-    BigDecimal popularNumber();
+    @Query(value = "SELECT num.NUMBER FROM Numbers n GROUP BY num.NUMBER HAVING COUNT(num.NUMBER) = (SELECT COUNT(n.NUMBER) FROM NUMBERS n GROUP BY n.NUMBER ORDER BY COUNT(n.NUMBER) DESC limit 1)", nativeQuery = true)
+    String popularNumber();
 }

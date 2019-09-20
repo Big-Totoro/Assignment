@@ -6,8 +6,9 @@ import io.sskuratov.parser.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -31,7 +32,10 @@ public class ExpressionsService {
      * @return
      */
     public Long amountOnDate(LocalDate date) {
-        return expressionsRepository.amountOnDate(date);
+        return expressionsRepository.amountOnDate(
+                LocalDateTime.of(date, LocalTime.of(0, 0, 0, 0)),
+                LocalDateTime.of(date, LocalTime.of(23, 59, 59))
+        );
     }
 
     /**
@@ -48,8 +52,11 @@ public class ExpressionsService {
      * @param date
      * @return
      */
-    public List<Expressions> listOfExpressionsOnDate(LocalDate date) {
-        return expressionsRepository.listOfExpressionsOnDate(date);
+    public List<String> listOfExpressionsOnDate(LocalDate date) {
+        return expressionsRepository.listOfExpressionsOnDate(
+                LocalDateTime.of(date, LocalTime.of(0, 0, 0, 0)),
+                LocalDateTime.of(date, LocalTime.of(23, 59, 59))
+        );
     }
 
     /**
@@ -57,7 +64,7 @@ public class ExpressionsService {
      * @param type operation token
      * @return
      */
-    public List<Expressions> listOfExpressionsByOperation(TokenType type) {
+    public List<String> listOfExpressionsByOperation(TokenType type) {
         return expressionsRepository.listOfExpressionsByOperation(type);
     }
 
@@ -65,7 +72,7 @@ public class ExpressionsService {
      * Returns the most popular number(s) used among the expressions
      * @return
      */
-    public BigDecimal popularNumber() {
+    public String popularNumber() {
         return expressionsRepository.popularNumber();
     }
 }
