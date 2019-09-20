@@ -1,15 +1,14 @@
 package io.sskuratov.mathparserservice.controllers;
 
-import io.sskuratov.mathparserservice.dao.Expressions;
 import io.sskuratov.mathparserservice.services.ExpressionsService;
 import io.sskuratov.parser.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,11 +20,11 @@ public class StatRestController {
 
     @GetMapping("/stats/v1/expressions/amount/date/{date}")
     @ResponseBody
-    public Long amountOnDate(@PathVariable LocalDate date) {
+    public Long amountOnDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return expressionsService.amountOnDate(date);
     }
 
-    @GetMapping("/stats/v1/expressions/amount/operation/{operationId}")
+    @GetMapping("/stats/v1/expressions/amount/operation/{type}")
     @ResponseBody
     public Long amountByOperation(@PathVariable TokenType type) {
         return expressionsService.amountByOperation(type);
@@ -33,19 +32,19 @@ public class StatRestController {
 
     @GetMapping("/stats/v1/expressions/date/{date}")
     @ResponseBody
-    public List<Expressions> listOfExpressionsOnDate(@PathVariable LocalDate date) {
+    public List<String> listOfExpressionsOnDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return expressionsService.listOfExpressionsOnDate(date);
     }
 
     @GetMapping("/stats/v1/expressions/operation/{type}")
     @ResponseBody
-    public List<Expressions> listOfExpressionsByOperation(@PathVariable TokenType type) {
+    public List<String> listOfExpressionsByOperation(@PathVariable TokenType type) {
         return expressionsService.listOfExpressionsByOperation(type);
     }
 
     @GetMapping("/stats/v1/number/popular")
     @ResponseBody
-    public BigDecimal popularNumber() {
+    public String popularNumber() {
         return expressionsService.popularNumber();
     }
 }
