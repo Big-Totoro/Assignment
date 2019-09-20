@@ -36,15 +36,6 @@ public class Expressions {
     @OneToMany(cascade = ALL, fetch = FetchType.EAGER)
     private Set<Numbers> numbers = new HashSet<>();
 
-    public Expressions(LocalDateTime createdDate, String expression, BigDecimal result,
-                       Set<Operations> operations, Set<Numbers> numbers) {
-        this.createdDate = createdDate;
-        this.expression = expression;
-        this.result = result;
-        this.operations = operations;
-        this.numbers = numbers;
-    }
-
     public static Expressions from(EvaluationResult result) {
         Expressions e = new Expressions();
         e.createdDate = LocalDateTime.now();

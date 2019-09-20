@@ -44,7 +44,7 @@ public interface ExpressionsRepository extends JpaRepository<Expressions, Long> 
      * @param operation operation token
      * @return
      */
-    @Query(value = "SELECT e.id, e.createdDate, e.expression, e.result FROM Expressions e INNER JOIN e.operations AS o WHERE o.type=:operation")
+    @Query(value = "SELECT e.expression FROM Expressions e INNER JOIN e.operations AS o WHERE o.type=:operation")
     List<String> listOfExpressionsByOperation(@Param("operation") TokenType operation);
 
     /**
