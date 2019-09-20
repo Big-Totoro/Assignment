@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,10 +23,10 @@ import static javax.persistence.CascadeType.ALL;
 public class Expressions {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate created_on;
+    private LocalDateTime createdDate;
     private String expression;
     private BigDecimal result;
 
@@ -36,9 +36,9 @@ public class Expressions {
     @OneToMany(cascade = ALL, fetch = FetchType.EAGER)
     private Set<Numbers> numbers = new HashSet<>();
 
-    public Expressions(LocalDate created_on, String expression, BigDecimal result,
+    public Expressions(LocalDateTime createdDate, String expression, BigDecimal result,
                        Set<Operations> operations, Set<Numbers> numbers) {
-        this.created_on = created_on;
+        this.createdDate = createdDate;
         this.expression = expression;
         this.result = result;
         this.operations = operations;
@@ -47,7 +47,7 @@ public class Expressions {
 
     public static Expressions from(EvaluationResult result) {
         Expressions e = new Expressions();
-        e.created_on = LocalDate.now();
+        e.createdDate = LocalDateTime.now();
         e.expression = result.getExpression();
         e.result = result.getResult();
         e.operations = result.getTokens().stream()
