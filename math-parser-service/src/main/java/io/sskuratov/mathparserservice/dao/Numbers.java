@@ -20,9 +20,9 @@ public class Numbers {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Expressions expression;
 
-    private BigDecimal number;
+    private BigDecimal value;
 
-    public Numbers(BigDecimal number) {
-        this.number = number;
+    public Numbers(BigDecimal value) {
+        this.value = value;
     }
 }

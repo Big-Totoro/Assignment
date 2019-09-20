@@ -72,7 +72,7 @@ public class ExpressionsService {
      * Returns the most popular number(s) used among the expressions
      * @return
      */
-    public String popularNumber() {
+    public List<String> popularNumber() {
         return expressionsRepository.popularNumber();
     }
 }

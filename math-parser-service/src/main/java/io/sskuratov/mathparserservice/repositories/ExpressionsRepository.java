@@ -51,6 +51,8 @@ public interface ExpressionsRepository extends JpaRepository<Expressions, Long> 
      * Returns the most popular number(s) used among the expressions
      * @return
      */
-    @Query(value = "SELECT num.NUMBER FROM Numbers n GROUP BY num.NUMBER HAVING COUNT(num.NUMBER) = (SELECT COUNT(n.NUMBER) FROM NUMBERS n GROUP BY n.NUMBER ORDER BY COUNT(n.NUMBER) DESC limit 1)", nativeQuery = true)
-    String popularNumber();
+    @Query(value = "SELECT num.value FROM Numbers num GROUP BY num.value HAVING COUNT(num.value) = " +
+            "(SELECT COUNT(n.value) FROM NUMBERS n GROUP BY n.value ORDER BY COUNT(n.value) DESC limit 1)",
+            nativeQuery = true)
+    List<String> popularNumber();
 }

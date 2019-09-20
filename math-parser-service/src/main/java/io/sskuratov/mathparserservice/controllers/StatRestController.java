@@ -44,7 +44,7 @@ public class StatRestController {
 
     @GetMapping("/stats/v1/number/popular")
     @ResponseBody
-    public String popularNumber() {
+    public List<String> popularNumber() {
         return expressionsService.popularNumber();
     }
 }
