@@ -1,5 +1,6 @@
 package io.sskuratov.mathparserservice.controllers;
 
+import io.sskuratov.mathparserservice.services.ExpressionsService;
 import io.sskuratov.mathparserservice.services.MathParserService;
 import io.sskuratov.parser.EvaluationResult;
 import io.sskuratov.parser.exceptions.InvalidTokenException;
@@ -23,13 +24,18 @@ public class ParserRestController {
     @Autowired
     private MathParserService mathParserService;
 
+    @Autowired
+    private ExpressionsService expressionsService;
+
     @GetMapping("/parser/v1/parse")
     @ResponseBody
     public ResponseEntity<EvaluationResult> parse(@RequestParam String expression) throws UnsupportedEncodingException {
         try {
             expression = URLDecoder.decode(expression, StandardCharsets.UTF_8.toString());
-            return new ResponseEntity<>(
-            mathParserService.parse(expression), HttpStatus.OK);
+            EvaluationResult result = mathParserService.parse(expression);
+//            expressionsService.save();
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (InvalidTokenException | ParsingException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
