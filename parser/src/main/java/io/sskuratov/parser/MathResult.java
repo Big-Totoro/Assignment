@@ -10,8 +10,14 @@ import java.util.Collection;
 @NoArgsConstructor
 public class MathResult implements EvaluationResult {
 
+    private String expression;
     private BigDecimal result;
     private Collection<Token> tokens;
+
+    @Override
+    public String getExpression() {
+        return expression;
+    }
 
     @Override
     public BigDecimal getResult() {

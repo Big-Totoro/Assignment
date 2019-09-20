@@ -1,5 +1,8 @@
 package io.sskuratov.mathparserservice.dao;
 
+import io.sskuratov.parser.EvaluationResult;
+import io.sskuratov.parser.Token;
+import io.sskuratov.parser.TokenType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static javax.persistence.CascadeType.ALL;
 
@@ -39,5 +43,24 @@ public class Expressions {
         this.result = result;
         this.operations = operations;
         this.numbers = numbers;
+    }
+
+    public static Expressions from(EvaluationResult result) {
+        Expressions e = new Expressions();
+        e.created_on = LocalDate.now();
+        e.expression = result.getExpression();
+        e.result = result.getResult();
+        e.operations = result.getTokens().stream()
+                .filter(t -> t.getTokenType() != TokenType.NUM)
+                .map(Token::getTokenType)
+                .map(Operations::new)
+                .collect(Collectors.toSet());
+        e.numbers = result.getTokens().stream()
+                .filter(t -> t.getTokenType() == TokenType.NUM)
+                .map(Token::getValue)
+                .map(Numbers::new)
+                .collect(Collectors.toSet());
+
+        return e;
     }
 }

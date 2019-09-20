@@ -16,23 +16,56 @@ public class ExpressionsService {
     @Autowired
     private ExpressionsRepository expressionsRepository;
 
+    /**
+     * Saves the expression to the database
+     * @param expressions
+     * @return
+     */
+    public Expressions save(Expressions expressions) {
+        return expressionsRepository.save(expressions);
+    }
+
+    /**
+     * Returns amount of calculated expressions on date
+     * @param date
+     * @return
+     */
     public Long amountOnDate(LocalDate date) {
-        return null;
+        return expressionsRepository.amountOnDate(date);
     }
 
+    /**
+     * Returns amount of calculated expressions have the specific operation
+     * @param type operation token
+     * @return
+     */
     public Long amountByOperation(TokenType type) {
-        return null;
+        return expressionsRepository.amountByOperation(type);
     }
 
+    /**
+     * Returns a list of calculated expressions on date
+     * @param date
+     * @return
+     */
     public List<Expressions> listOfExpressionsOnDate(LocalDate date) {
-        return null;
+        return expressionsRepository.listOfExpressionsOnDate(date);
     }
 
+    /**
+     * Returns a list of calculated expressions have the specific operation
+     * @param type operation token
+     * @return
+     */
     public List<Expressions> listOfExpressionsByOperation(TokenType type) {
-        return null;
+        return expressionsRepository.listOfExpressionsByOperation(type);
     }
 
+    /**
+     * Returns the most popular number(s) used among the expressions
+     * @return
+     */
     public BigDecimal popularNumber() {
-        return null;
+        return expressionsRepository.popularNumber();
     }
 }

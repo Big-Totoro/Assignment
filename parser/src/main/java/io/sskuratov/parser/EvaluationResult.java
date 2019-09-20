@@ -9,6 +9,12 @@ import java.util.Collection;
 public interface EvaluationResult {
 
     /**
+     * Returns the original expression
+     * @return
+     */
+    String getExpression();
+
+    /**
      * Returns the result of expression evaluation
      * @return
      */

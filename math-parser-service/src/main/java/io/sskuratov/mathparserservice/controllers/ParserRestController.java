@@ -1,5 +1,6 @@
 package io.sskuratov.mathparserservice.controllers;
 
+import io.sskuratov.mathparserservice.dao.Expressions;
 import io.sskuratov.mathparserservice.services.ExpressionsService;
 import io.sskuratov.mathparserservice.services.MathParserService;
 import io.sskuratov.parser.EvaluationResult;
@@ -33,8 +34,7 @@ public class ParserRestController {
         try {
             expression = URLDecoder.decode(expression, StandardCharsets.UTF_8.toString());
             EvaluationResult result = mathParserService.parse(expression);
-//            expressionsService.save();
-
+            expressionsService.save(Expressions.from(result));
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (InvalidTokenException | ParsingException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

@@ -22,6 +22,6 @@ public class MathExpressionParser implements Parser {
         BigDecimal result = interpreter.evaluate();
         Collection<Token> tokens = interpreter.getTokens();
 
-        return new MathResult(result, tokens);
+        return new MathResult(expression, result, tokens);
     }
 }
