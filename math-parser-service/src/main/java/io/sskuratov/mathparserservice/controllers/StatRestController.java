@@ -4,10 +4,9 @@ import io.sskuratov.mathparserservice.services.ExpressionsService;
 import io.sskuratov.parser.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -46,5 +45,10 @@ public class StatRestController {
     @ResponseBody
     public List<String> popularNumber() {
         return expressionsService.popularNumber();
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public final ResponseEntity<Exception> handleAllExceptions(RuntimeException ex) {
+        return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

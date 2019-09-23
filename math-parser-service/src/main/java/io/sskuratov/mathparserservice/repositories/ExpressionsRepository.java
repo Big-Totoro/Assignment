@@ -24,7 +24,7 @@ public interface ExpressionsRepository extends JpaRepository<Expressions, Long> 
 
     /**
      * Returns amount of calculated expressions have the specific operation
-     * @param operation operation token
+     * @param operation token
      * @return
      */
     @Query(value = "SELECT COUNT(e.expression) FROM Expressions e INNER JOIN e.operations AS o WHERE o.type=:operation")
