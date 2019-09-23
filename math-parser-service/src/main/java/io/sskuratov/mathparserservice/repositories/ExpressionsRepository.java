@@ -19,7 +19,7 @@ public interface ExpressionsRepository extends JpaRepository<Expressions, Long> 
      * @param endDate
      * @return
      */
-    @Query(value = "SELECT count(e.expression) FROM Expressions e WHERE e.createdDate BETWEEN :beginDate AND :endDate")
+    @Query(value = "SELECT COUNT(e.expression) FROM Expressions e WHERE e.createdDate BETWEEN :beginDate AND :endDate")
     Long amountOnDate(@Param("beginDate") LocalDateTime beginDate, @Param("endDate") LocalDateTime endDate);
 
     /**
@@ -27,7 +27,7 @@ public interface ExpressionsRepository extends JpaRepository<Expressions, Long> 
      * @param operation token
      * @return
      */
-    @Query(value = "SELECT COUNT(e.expression) FROM Expressions e INNER JOIN e.operations AS o WHERE o.type=:operation")
+    @Query(value = "SELECT COUNT(DISTINCT e.expression) FROM Expressions e INNER JOIN e.operations AS o WHERE o.type=:operation")
     Long amountByOperation(@Param("operation") TokenType operation);
 
     /**
@@ -44,7 +44,7 @@ public interface ExpressionsRepository extends JpaRepository<Expressions, Long> 
      * @param operation operation token
      * @return
      */
-    @Query(value = "SELECT e.expression FROM Expressions e INNER JOIN e.operations AS o WHERE o.type=:operation")
+    @Query(value = "SELECT DISTINCT e.expression FROM Expressions e INNER JOIN e.operations AS o WHERE o.type=:operation")
     List<String> listOfExpressionsByOperation(@Param("operation") TokenType operation);
 
     /**

@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 
 @RestController
 public class ParserRestController {
@@ -32,7 +30,6 @@ public class ParserRestController {
     @ResponseBody
     public ResponseEntity<EvaluationResult> parse(@RequestParam String expression) throws UnsupportedEncodingException {
         try {
-            expression = URLDecoder.decode(expression, StandardCharsets.UTF_8.toString());
             EvaluationResult result = mathParserService.parse(expression);
             expressionsService.save(Expressions.from(result));
             return new ResponseEntity<>(result, HttpStatus.OK);
