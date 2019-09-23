@@ -4,7 +4,7 @@ applications:
     buildpack: https://github.com/cloudfoundry/java-buildpack.git
     instances: 1
     random-route: true
-    path: target/math-parser-service-1.0-SNAPSHOT.war
+    path: math-parser-service/target/math-parser-service-1.0-SNAPSHOT.war
     env:
       DEBUG: "true"
       SPRING_PROFILES_ACTIVE: cloud
