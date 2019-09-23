@@ -28,7 +28,6 @@ public class ExpressionsServiceTest {
     private final String expression = "7 + 3 * ( 10 / (12 / (3 + 1) - 1) ) / (2 + 3) - 5 - 3 + (8) + 1 + 1";
     private final BigDecimal expressionResult = BigDecimal.valueOf(12);
 
-
     @Autowired
     private ExpressionsService expressionsService;
 
