@@ -36,7 +36,7 @@ Please use `Assignment$ mvn clean install` command to build all modules and then
 
 ## Pivotal Cloud Service
 
-I use trial period of [Pivotal Web Services](https://run.pivotal.io/) to deploy my microservice and play a bit with it. All technical details are in the manifest.yml file. And I'm just going to provide the link to the *math-parser-service* endpoints here.
+I use trial period of [Pivotal Web Services](https://run.pivotal.io/) to deploy my microservice .war file and play a bit with it. All technical details are in the manifest.yml file. And I'm just going to provide the link to the *math-parser-service* endpoints here.
 
 https://bootcamp-customers-sleepy-bongo.cfapps.io/parser/v1/parse?expression=100-50
 
