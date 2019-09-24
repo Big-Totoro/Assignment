@@ -1,0 +1,4 @@
+FROM java:8
+EXPOSE 8080
+ADD /math-parser-service/target/math-parser-service-1.0-SNAPSHOT.war math-parser-service-1.0-SNAPSHOT.war
+ENTRYPOINT ["java", "-jar", "math-parser-service-1.0-SNAPSHOT.war"]
