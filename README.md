@@ -2,7 +2,7 @@
 
 ## Description
 
-*math-parser-service* is Spring-boot REST service to parse and calculate mathematical expressions for the following small set of operations: "+", "-", "*", "/", "(", ")", "^". And provides some statistic about calculated expressions.
+*math-parser-service* is Spring-boot REST service to parse and calculate mathematical expressions for the following small set of the operations: "+", "-", "*", "/", "(", ")", "^". And provides some statistic about the calculated expressions.
 
 ### Prodvides the following functionality
 
@@ -17,7 +17,7 @@
   
 - `/stats/v1/expressions/date/{date}` - returns a list of the calculated expressions for the specific date. `{date}` is ISO-DATE format. Example `/stats/v1/expressions/date/2019-09-24`.
 
-- `/stats/v1/expressions/operation/{operation}` -  - returns a list of the calculated expressions for the specific operation. Where {operation} set is "+" - plus, "-" - minus, "*" - multiply, "/" - div, "(" - lp, ")" - rp, "^" - pow. 
+- `/stats/v1/expressions/operation/{operation}` - returns a list of the calculated expressions for the specific operation. Where {operation} set is "+" - plus, "-" - minus, "*" - multiply, "/" - div, "(" - lp, ")" - rp, "^" - pow. 
   Example `/stats/v1/expressions/operation/multiply`
 
 - `/stats/v1/number/popular` - returns the most popular number across all calculated expressions.
@@ -32,7 +32,7 @@ The parser correspons to the context free-grammar as following
 
 ## Build and run
 
-Please use `Assignment$ mvn clean install` command to build all modules and then go to 'math-parser-service' folder and run the command `./mvnw spring-boot:run` 
+Please use `Assignment$ mvn clean install` command to build all modules and then go to 'math-parser-service' folder to run the command `./mvnw spring-boot:run` 
 
 ## Pivotal Cloud Service
 
