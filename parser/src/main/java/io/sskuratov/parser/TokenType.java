@@ -8,4 +8,36 @@ public enum TokenType {
     TokenType(int type) {
         this.type = type;
     }
+
+    public static String toSign(TokenType type) {
+        String result;
+
+        switch (type) {
+            case PLUS :
+                result = "+";
+                break;
+            case MINUS :
+                result = "-";
+                break;
+            case MULTIPLY :
+                result = "*";
+                break;
+            case DIV :
+                result = "/";
+                break;
+            case LP :
+                result = "(";
+                break;
+            case RP :
+                result = ")";
+                break;
+            case POW :
+                result = "^";
+                break;
+            default:
+                throw new IllegalArgumentException("The NUM token cannot be converted to specific string representation");
+        }
+
+        return result;
+    }
 }
