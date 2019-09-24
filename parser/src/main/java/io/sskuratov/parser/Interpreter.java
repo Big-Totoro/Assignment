@@ -44,11 +44,11 @@ public class Interpreter {
     private BigDecimal term() throws InvalidTokenException {
         BigDecimal result = factor();
 
-        while ((currentToken.getTokenType() == TokenType.MULTIPLY) ||
+        while ((currentToken.getTokenType() == TokenType.MUL) ||
                 (currentToken.getTokenType() == TokenType.DIV)) {
             Token op = currentToken;
-            if (op.getTokenType() == TokenType.MULTIPLY) {
-                eat(TokenType.MULTIPLY);
+            if (op.getTokenType() == TokenType.MUL) {
+                eat(TokenType.MUL);
                 result = result.multiply(factor());
             } else if (op.getTokenType() == TokenType.DIV) {
                 eat(TokenType.DIV);

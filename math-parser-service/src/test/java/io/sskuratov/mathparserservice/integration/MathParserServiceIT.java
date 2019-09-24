@@ -71,7 +71,7 @@ public class MathParserServiceIT {
         /**
          * Parse a list of expressions
          */
-        expressions.stream()
+        expressions
                 .forEach(e -> {
                     MathResult result =
                             given().
@@ -97,7 +97,7 @@ public class MathParserServiceIT {
         final List<String> actualExpr = get(String.format("/stats/v1/expressions/operation/%s", type)).as(ArrayList.class);
         final List<String> expectedExpr = expressions.stream()
                 .filter(e -> e.getExpression().contains(TokenType.toSign(type)))
-                .map(e -> e.getExpression())
+                .map(E::getExpression)
                 .collect(Collectors.toList());
         assertThat(
                 String.format(FORMAT_EXPECTED_ACTUAL, expectedExpr, actualExpr),
@@ -115,7 +115,7 @@ public class MathParserServiceIT {
                 LocalDate.now().format(DateTimeFormatter.ISO_DATE))).
             as(Long.class);
         assertThat(String.format(FORMAT_EXPECTED_ACTUAL, expressions.size(), result),
-                result, equalTo(Long.valueOf(expressions.size())));
+                result, equalTo((long) expressions.size()));
 
         /**
          * Amount of expression with operation PLUS
@@ -133,7 +133,7 @@ public class MathParserServiceIT {
          * Amount of expression with operation MULTIPLY
          */
         final Long MULTIPLY_EXPR = 7L;
-        amountByOperation(TokenType.MULTIPLY, MULTIPLY_EXPR);
+        amountByOperation(TokenType.MUL, MULTIPLY_EXPR);
 
         /**
          * Amount of expression with operation DIV
@@ -165,7 +165,7 @@ public class MathParserServiceIT {
         final List<String> actualExpr = get(String.format("/stats/v1/expressions/date/%s",
                     LocalDate.now().format(DateTimeFormatter.ISO_DATE))).
                     as(ArrayList.class);
-        final List<String> expectedExpr = expressions.stream().map(e -> e.getExpression()).collect(Collectors.toList());
+        final List<String> expectedExpr = expressions.stream().map(E::getExpression).collect(Collectors.toList());
         assertThat(
                 String.format(FORMAT_EXPECTED_ACTUAL, expectedExpr, actualExpr),
                 actualExpr,
@@ -185,7 +185,7 @@ public class MathParserServiceIT {
         /**
          * Amount of expression with operation MULTIPLY
          */
-        listOfExpressionsByOperation(TokenType.MULTIPLY);
+        listOfExpressionsByOperation(TokenType.MUL);
 
         /**
          * Amount of expression with operation DIV

@@ -44,7 +44,7 @@ public class LexicalAnalyzer {
 
             if (currentChar == '*') {
                 move();
-                return new Token(TokenType.MULTIPLY, BigDecimal.ZERO);
+                return new Token(TokenType.MUL, BigDecimal.ZERO);
             }
 
             if (currentChar == '/') {
