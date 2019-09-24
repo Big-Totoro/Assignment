@@ -4,7 +4,7 @@
 
 *math-parser-service* is Spring-boot REST service to parse and calculate mathematical expressions for the following small set of the operations: "+", "-", "*", "/", "(", ")", "^". And provides some statistic about the calculated expressions.
 
-### Prodvides the following functionality
+### Provides the following functionality
 
 - `/parser/v1/parse?expression={expression}` - parses the expression and returns the result of the calculation or an error. 
   Example `/parser/v1/parse?expression=(-7*8+9-(9/4.5))^2`. Please be informed that the URL should be properly encoded before execution. Please use one of the online URL Encode services like [www.urlencoder.org](https://www.urlencoder.org/). So the request should be encoded to the `/parser/v1/parse?expression=%28-7%2A8%2B9-%289%2F4.5%29%29%5E2`
