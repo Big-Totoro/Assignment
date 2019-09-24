@@ -49,3 +49,10 @@ https://bootcamp-customers-sleepy-bongo.cfapps.io/stats/v1/expressions/date/2019
 https://bootcamp-customers-sleepy-bongo.cfapps.io/stats/v1/expressions/operation/plus
 
 https://bootcamp-customers-sleepy-bongo.cfapps.io/stats/v1/number/popular
+
+## Docker
+
+Please use the following commands to run the *math-parser-service* in Docker container.
+1. `docker build -f DockerFile -t math-parser-service .` - it will build the image. And you can check the images with `docker images` command. The *math-parser-service* should be in the list.
+2. `docker run -p 8080:8080 math-parser-service` to run the Docker image.
+3. Check the url http://localhost:8080/parser/v1/parse?expression=100-50 in the browser.
