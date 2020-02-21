@@ -14,13 +14,17 @@ import java.util.List;
 @Service
 public class ExpressionsService {
 
-    @Autowired
     private ExpressionsRepository expressionsRepository;
+
+    @Autowired
+    public ExpressionsService(ExpressionsRepository expressionsRepository) {
+        this.expressionsRepository = expressionsRepository;
+    }
 
     /**
      * Saves the expression to the database
-     * @param expressions
-     * @return
+     * @param expressions to save
+     * @return the operation result
      */
     public Expressions save(Expressions expressions) {
         return expressionsRepository.save(expressions);
@@ -28,8 +32,8 @@ public class ExpressionsService {
 
     /**
      * Returns amount of calculated expressions on date
-     * @param date
-     * @return
+     * @param date of calculation
+     * @return the operation result
      */
     public Long amountOnDate(LocalDate date) {
         return expressionsRepository.amountOnDate(
@@ -41,7 +45,7 @@ public class ExpressionsService {
     /**
      * Returns amount of calculated expressions have the specific operation
      * @param type operation token
-     * @return
+     * @return the operation result
      */
     public Long amountByOperation(TokenType type) {
         return expressionsRepository.amountByOperation(type);
@@ -49,8 +53,8 @@ public class ExpressionsService {
 
     /**
      * Returns a list of calculated expressions on date
-     * @param date
-     * @return
+     * @param date of operation
+     * @return the operation result
      */
     public List<String> listOfExpressionsOnDate(LocalDate date) {
         return expressionsRepository.listOfExpressionsOnDate(
@@ -62,7 +66,7 @@ public class ExpressionsService {
     /**
      * Returns a list of calculated expressions have the specific operation
      * @param type operation token
-     * @return
+     * @return the operation result
      */
     public List<String> listOfExpressionsByOperation(TokenType type) {
         return expressionsRepository.listOfExpressionsByOperation(type);
@@ -70,7 +74,7 @@ public class ExpressionsService {
 
     /**
      * Returns the most popular number(s) used among the expressions
-     * @return
+     * @return the operation result
      */
     public List<String> popularNumber() {
         return expressionsRepository.popularNumber();

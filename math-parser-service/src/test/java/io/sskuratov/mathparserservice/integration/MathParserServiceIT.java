@@ -1,6 +1,7 @@
 package io.sskuratov.mathparserservice.integration;
 
 import io.restassured.RestAssured;
+import io.restassured.common.mapper.TypeRef;
 import io.sskuratov.parser.MathResult;
 import io.sskuratov.parser.TokenType;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,9 +68,7 @@ public class MathParserServiceIT {
     }
 
     private void prepareParsedExpressions() {
-        /**
-         * Parse a list of expressions
-         */
+        // Parse a list of expressions
         expressions
                 .forEach(e -> {
                     MathResult result =
@@ -94,9 +92,10 @@ public class MathParserServiceIT {
     }
 
     private void listOfExpressionsByOperation(TokenType type) {
-        final List<String> actualExpr = get(String.format("/stats/v1/expressions/operation/%s", type)).as(ArrayList.class);
+        final List<String> actualExpr = get(String.format("/stats/v1/expressions/operation/%s", type))
+                .as(new TypeRef<List<String>>(){});
         final List<String> expectedExpr = expressions.stream()
-                .filter(e -> e.getExpression().contains(TokenType.toSign(type)))
+                .filter(e -> e.getExpression().contains(type.getSign()))
                 .map(E::getExpression)
                 .collect(Collectors.toList());
         assertThat(
@@ -108,63 +107,45 @@ public class MathParserServiceIT {
 
     @Test
     public void verifyIntegration() {
-        /**
-         * Amount of expressions on date
-         */
+        // Amount of expressions on date
         final Long result = get(String.format("/stats/v1/expressions/amount/date/%s",
                 LocalDate.now().format(DateTimeFormatter.ISO_DATE))).
             as(Long.class);
         assertThat(String.format(FORMAT_EXPECTED_ACTUAL, expressions.size(), result),
                 result, equalTo((long) expressions.size()));
 
-        /**
-         * Amount of expression with operation PLUS
-         */
+        // Amount of expressions with operation PLUS
         final Long PLUS_EXPR = 7L;
         amountByOperation(TokenType.PLUS, PLUS_EXPR);
 
-        /**
-         * Amount of expression with operation MINUS
-         */
+        // Amount of expressions with operation MINUS
         final Long MINUS_EXPR = 5L;
         amountByOperation(TokenType.MINUS, MINUS_EXPR);
 
-        /**
-         * Amount of expression with operation MULTIPLY
-         */
+        // Amount of expressions with operation MULTIPLY
         final Long MULTIPLY_EXPR = 7L;
         amountByOperation(TokenType.MUL, MULTIPLY_EXPR);
 
-        /**
-         * Amount of expression with operation DIV
-         */
+        // Amount of expressions with operation DIV
         final Long DIV_EXPR = 4L;
         amountByOperation(TokenType.DIV, DIV_EXPR);
 
-        /**
-         * Amount of expression with operation LEFT BRACKET
-         */
+        // Amount of expressions with operation LEFT BRACKET
         final Long LP_EXPR = 3L;
         amountByOperation(TokenType.LP, LP_EXPR);
 
-        /**
-         * Amount of expression with operation RIGHT BRACKET
-         */
+        // Amount of expressions with operation RIGHT BRACKET
         final Long RP_EXPR = 3L;
         amountByOperation(TokenType.LP, RP_EXPR);
 
-        /**
-         * Amount of expression with operation POWER
-         */
+        // Amount of expressions with operation POWER
         final Long POW_EXPR = 3L;
         amountByOperation(TokenType.POW, POW_EXPR);
 
-        /**
-         * List of expressions on date
-         */
+        // List of expressions on date
         final List<String> actualExpr = get(String.format("/stats/v1/expressions/date/%s",
                     LocalDate.now().format(DateTimeFormatter.ISO_DATE))).
-                    as(ArrayList.class);
+                    as(new TypeRef<List<String>>(){});
         final List<String> expectedExpr = expressions.stream().map(E::getExpression).collect(Collectors.toList());
         assertThat(
                 String.format(FORMAT_EXPECTED_ACTUAL, expectedExpr, actualExpr),
@@ -172,46 +153,33 @@ public class MathParserServiceIT {
                 equalTo(expectedExpr)
         );
 
-        /**
-         * Amount of expression with operation PLUS
-         */
+        // Amount of expressions with operation PLUS
         listOfExpressionsByOperation(TokenType.PLUS);
 
-        /**
-         * Amount of expression with operation MINUS
-         */
+        // Amount of expression with operation MINUS
         listOfExpressionsByOperation(TokenType.MINUS);
 
-        /**
-         * Amount of expression with operation MULTIPLY
-         */
+        // Amount of expressions with operation MULTIPLY
         listOfExpressionsByOperation(TokenType.MUL);
 
-        /**
-         * Amount of expression with operation DIV
-         */
+        // Amount of expressions with operation DIV
         listOfExpressionsByOperation(TokenType.DIV);
 
-        /**
-         * Amount of expression with operation LP
-         */
+        // Amount of expressions with operation LP
         listOfExpressionsByOperation(TokenType.LP);
 
-        /**
-         * Amount of expression with operation RP
-         */
+        // Amount of expressions with operation RP
         listOfExpressionsByOperation(TokenType.RP);
 
-        /**
-         * Amount of expression with operation POW
-         */
+        // Amount of expressions with operation POW
         listOfExpressionsByOperation(TokenType.POW);
 
-        /**
-         * Verify the most popular numbers request
-         */
-        final List<String> actualPopular = get("/stats/v1/number/popular").as(ArrayList.class);
-        final List<String> expectedPopular = Arrays.asList("2.00");
+        // Verify the most popular numbers request
+        final List<String> actualPopular = get("/stats/v1/number/popular")
+                .as(new TypeRef<List<String>>(){});
+        final List<String> expectedPopular = new ArrayList<>();
+        expectedExpr.add("2.00");
+
         assertThat(
                 String.format(FORMAT_EXPECTED_ACTUAL, expectedPopular, actualPopular),
                 actualPopular,

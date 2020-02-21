@@ -15,20 +15,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.UnsupportedEncodingException;
-
 @RestController
 public class ParserRestController {
 
-    @Autowired
     private MathParserService mathParserService;
+    private ExpressionsService expressionsService;
 
     @Autowired
-    private ExpressionsService expressionsService;
+    public ParserRestController(ExpressionsService expressionsService, MathParserService mathParserService) {
+        this.expressionsService = expressionsService;
+        this.mathParserService = mathParserService;
+    }
 
     @GetMapping("/parser/v1/parse")
     @ResponseBody
-    public ResponseEntity<EvaluationResult> parse(@RequestParam String expression) throws UnsupportedEncodingException {
+    public ResponseEntity<EvaluationResult> parse(@RequestParam String expression) {
         try {
             EvaluationResult result = mathParserService.parse(expression);
             expressionsService.save(Expressions.from(result));

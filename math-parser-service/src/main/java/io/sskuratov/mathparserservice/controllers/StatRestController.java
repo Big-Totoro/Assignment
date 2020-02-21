@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class StatRestController {
 
-    @Autowired
     private ExpressionsService expressionsService;
+
+    @Autowired
+    public StatRestController(ExpressionsService expressionsService) {
+        this.expressionsService = expressionsService;
+    }
 
     @GetMapping("/stats/v1/expressions/amount/date/{date}")
     @ResponseBody

@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class Token {
 
-    TokenType tokenType;
-    BigDecimal value;
+    private TokenType tokenType;
+    private BigDecimal value;
 
     @Override
     public String toString() {

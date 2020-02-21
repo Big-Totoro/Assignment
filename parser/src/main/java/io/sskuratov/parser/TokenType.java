@@ -1,43 +1,23 @@
 package io.sskuratov.parser;
 
 public enum TokenType {
-    NUM(0), PLUS(1), MINUS(2), MUL(3), DIV(4), LP(5), RP(6), POW(7), END(8);
+    NUM(0, ""), PLUS(1, "+"), MINUS(2, "-"), MUL(3, "*"),
+    DIV(4, "/"), LP(5, "("), RP(6, ")"), POW(7, "^"),
+    END(8, "E");
 
-    public final int type;
+    private final int type;
+    private final String sign;
 
-    TokenType(int type) {
+    TokenType(int type, String sign) {
         this.type = type;
+        this.sign = sign;
     }
 
-    public static String toSign(TokenType type) {
-        String result;
+    public int getType() {
+        return type;
+    }
 
-        switch (type) {
-            case PLUS :
-                result = "+";
-                break;
-            case MINUS :
-                result = "-";
-                break;
-            case MUL:
-                result = "*";
-                break;
-            case DIV :
-                result = "/";
-                break;
-            case LP :
-                result = "(";
-                break;
-            case RP :
-                result = ")";
-                break;
-            case POW :
-                result = "^";
-                break;
-            default:
-                throw new IllegalArgumentException("The NUM token cannot be converted to specific string representation");
-        }
-
-        return result;
+    public String getSign() {
+        return sign;
     }
 }
