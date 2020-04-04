@@ -34,22 +34,6 @@ The parser correspons to the context free-grammar as following
 
 Please use `Assignment$ mvn clean install` command to build all modules and then go to 'math-parser-service' folder to run the command `./mvnw spring-boot:run` 
 
-## Pivotal Cloud Service
-
-I use trial period of [Pivotal Web Services](https://run.pivotal.io/) to deploy my microservice .war file and play a bit with it. All technical details are in the manifest.yml file. And I'm just going to provide the link to the *math-parser-service* endpoints here.
-
-https://bootcamp-customers-sleepy-bongo.cfapps.io/parser/v1/parse?expression=100-50
-
-https://bootcamp-customers-sleepy-bongo.cfapps.io/stats/v1/expressions/amount/date/2019-09-24
-
-https://bootcamp-customers-sleepy-bongo.cfapps.io/stats/v1/expressions/amount/operation/minus
-
-https://bootcamp-customers-sleepy-bongo.cfapps.io/stats/v1/expressions/date/2019-09-24
-
-https://bootcamp-customers-sleepy-bongo.cfapps.io/stats/v1/expressions/operation/plus
-
-https://bootcamp-customers-sleepy-bongo.cfapps.io/stats/v1/number/popular
-
 ## Docker
 
 Please use the following commands to run the *math-parser-service* in Docker container.
